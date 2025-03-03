@@ -67,6 +67,24 @@ app.get('/info', (request, response) => {
     }
 })
 
+app.delete('/api/persons/:id', (request, response) => {
+
+
+    const id = request.params.id
+    const index = persons.findIndex(item => item.id === id)
+
+    if (index === -1) {
+        return response.status(404).json({ error: 'Person could not be found' })
+    } else {
+        console.log(`deleting ${persons[index]} from the phonebook database`)
+        persons.splice(index, 1)
+        response.json({ message: `person deleted successfully` })
+        response.status(204).end()
+    }
+
+
+})
+
 
 
 

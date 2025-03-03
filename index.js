@@ -85,21 +85,29 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
+    console.log('Receive POST request:', request.body)
 
     const generateId = () => {
         const randomNumber = Math.floor(Math.random() * 1000)
         return String(randomNumber)
     }
 
-    const body = request.body
-    const person = {
-        id: generateId(),
-        name: body.name,
-        number: body.number
+    const { name, number } = request.body
+    if (!name || !number) {
+        return response.status(400).json({ error: 'name or number is missing' })
+    } else {
+        const body = request.body
+        const person = {
+            id: generateId(),
+            name: body.name,
+            number: body.number
+        }
+
+        persons = persons.concat(person)
+        response.json(person)
     }
 
-    persons = persons.concat(person)
-    response.json(person)
+
 })
 
 

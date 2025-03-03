@@ -38,6 +38,19 @@ app.get('/api/persons', (request, response) => {
     }
 })
 
+app.get('/api/persons/:id', (request, response) => {
+    console.log('fetching person from the phonebook database')
+
+    const person = persons[request.params.id]
+
+    if (!person) {
+        return response.status(404).json({ error: 'Person not found' })
+    }
+
+    console.log('fetched', person)
+    response.json(person)
+})
+
 app.get('/info', (request, response) => {
     try {
         const personCount = persons.length
@@ -53,6 +66,9 @@ app.get('/info', (request, response) => {
         console.log(error);
     }
 })
+
+
+
 
 const PORT = 3001
 app.listen(PORT, () => {

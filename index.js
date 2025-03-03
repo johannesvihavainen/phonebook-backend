@@ -24,15 +24,31 @@ let persons = [
     }
 ]
 
-// app.get('/', (request, response) => {
-//     response.send('Phonebook backend is running!')
-// })
+app.get('/', (request, response) => {
+    response.send('Phonebook backend is running!')
+})
 
 app.get('/api/persons', (request, response) => {
     try {
         console.log('fetching people from the phonebook database')
         console.log('fetched people', persons)
         response.json(persons)
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+app.get('/info', (request, response) => {
+    try {
+        const personCount = persons.length
+        const time = new Date()
+
+        response.send(
+            `
+            <p>Phonebook has info for ${personCount} people</p>
+            <p>${time}</p>
+            `
+        )
     } catch (error) {
         console.log(error);
     }
